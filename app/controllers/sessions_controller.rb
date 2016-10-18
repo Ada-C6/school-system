@@ -1,10 +1,14 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_login, only: [:login, :create]
+
   def index
-    if session[:user_id].nil?
+
+    if current_user.nil?
       redirect_to login_failure_path
       return
     end
-    @user = User.find(session[:user_id])
+    # @user = User.find(session[:user_id])
+    # @m = current_user
   end
 
   def destroy
@@ -32,5 +36,6 @@ class SessionsController < ApplicationController
   def login_failure
   end
 
+  def login; end
 
 end
